@@ -6,8 +6,6 @@ FROM debian:jessie
 
 ENV DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true
 
-RUN dpkg --list | grep php | awk '/^ii/{ print $2}'
-
 RUN apt-get update && apt-get install wget -y && \
 wget -q https://packages.sury.org/php/apt.gpg -O- | apt-key add - && \
 echo "deb https://packages.sury.org/php/ jessie main" | tee /etc/apt/sources.list.d/php.list && \
@@ -15,7 +13,7 @@ apt-get install ca-certificates apt-transport-https -y
 
 # TODO: review this dependency list
 RUN apt-get update && apt-get install -y \
-	    git \
+        git \
         apache2 \
         curl \
         libapache2-mod-php7.3 \
@@ -37,6 +35,7 @@ RUN apt-get update && apt-get install -y \
 
 # For some reason phabricator doesn't have tagged releases. To support
 # repeatable builds use the latest SHA
+
 ADD     download.sh /opt/download.sh
 
 ARG PHABRICATOR_COMMIT=40af472ff5
@@ -49,8 +48,11 @@ RUN     bash download.sh arcanist    $ARCANIST_COMMIT
 RUN     bash download.sh libphutil   $LIBPHUTIL_COMMIT
 
 # Setup apache
+
 RUN     a2enmod rewrite
+
 ADD     phabricator.conf /etc/apache2/sites-available/phabricator.conf
+
 RUN     ln -s /etc/apache2/sites-available/phabricator.conf \
             /etc/apache2/sites-enabled/phabricator.conf && \
         rm -f /etc/apache2/sites-enabled/000-default.conf
