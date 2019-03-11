@@ -1,7 +1,8 @@
 {
+	  "phabricator.base-uri": "https://${PHABRICATOR_HOST}",
       "storage.default-namespace": "phabricator",
-      "mysql.host": "{{MYSQL_HOST}}",
-      "mysql.user": "{{MYSQL_USER}}",
-      "mysql.pass": "{{MYSQL_PASS}}",
+      "mysql.host": "${MYSQL_HOST}",
+      "mysql.user": "${MYSQL_USER}",
+      "mysql.pass": "${MYSQL_PASS}",
       "pygments.enabled": true
 }
