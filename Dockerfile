@@ -14,6 +14,7 @@ apt-get install ca-certificates apt-transport-https -y
 # TODO: review this dependency list
 RUN apt-get update && apt-get install -y \
         git \
+        vim \
         apache2 \
         curl \
         libapache2-mod-php7.3 \
@@ -22,7 +23,6 @@ RUN apt-get update && apt-get install -y \
         mysql-client \
         php7.3-xml \
         php7.3-mbstring \
-        php7.3-opcache \
         php7.3 \
         php7.3-apcu \
         php7.3-cli \
@@ -67,12 +67,12 @@ ADD  local.json /opt/phabricator/conf/local/local.json
 # Setup mailer
 ADD  mailer.json /opt/phabricator/conf/local/mailer.json
 
-RUN  /opt/phabricator/bin/config set --stdin cluster.mailers < /opt/phabricator/conf/local/mailer.json
+#RUN  /opt/phabricator/bin/config set --stdin cluster.mailers < /opt/phabricator/conf/local/mailer.json
 
 RUN  sed -e 's/post_max_size =.*/post_max_size = 32M/' \
-         -e 's/upload_max_filesize =.*/upload_max_filesize = 32M/' \
-         -e 's/;opcache.validate_timestamps=.*/opcache.validate_timestamps=0/' \
-         -i /etc/php/7.3/apache2/php.ini
+        -e 's/upload_max_filesize =.*/upload_max_filesize = 32M/' \
+        -e 's/;opcache.validate_timestamps=.*/opcache.validate_timestamps=0/' \
+        -i /etc/php/7.3/apache2/php.ini
 
 RUN  ln -s /usr/lib/git-core/git-http-backend /opt/phabricator/support/bin
 RUN  /opt/phabricator/bin/config set phd.user "root"
@@ -80,7 +80,7 @@ RUN  echo "www-data ALL=(ALL) SETENV: NOPASSWD: /opt/phabricator/support/bin/git
 
 #Help understanding phabricator that the request is served via HTTPS. 
 #Ref: https://secure.phabricator.com/book/phabricator/article/configuring_preamble/
-RUN  echo -e '<?php $_SERVER['HTTPS'] = true;' > /opt/phabricator/support/preamble.php
+RUN  echo '<?php $_SERVER['HTTPS'] = true;' > /opt/phabricator/support/preamble.php
 
 EXPOSE  80
 
