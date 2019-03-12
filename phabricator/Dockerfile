@@ -61,10 +61,10 @@ RUN  ln -s /etc/apache2/sites-available/phabricator.conf \
 RUN  mkdir -p /opt/phabricator/conf/local /var/repo
 ADD  local.json /opt/phabricator/conf/local/local.json
 
-#RUN     sed -e 's/post_max_size =.*/post_max_size = 32M/' \
-#          -e 's/upload_max_filesize =.*/upload_max_filesize = 32M/' \
-#          -e 's/;opcache.validate_timestamps=.*/opcache.validate_timestamps=0/' \
-#          -i /etc/php/apache2/php.ini
+RUN     sed 's/post_max_size =.*/post_max_size = 32M/' \
+         -e 's/upload_max_filesize =.*/upload_max_filesize = 32M/' \
+         -e 's/;opcache.validate_timestamps=.*/opcache.validate_timestamps=0/' \
+         -i /etc/php/7.3/apache2/php.ini
 
 RUN  ln -s /usr/lib/git-core/git-http-backend /opt/phabricator/support/bin
 RUN  /opt/phabricator/bin/config set phd.user "root"
