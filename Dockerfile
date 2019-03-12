@@ -69,7 +69,7 @@ ADD  mailer.json /opt/phabricator/conf/local/mailer.json
 
 RUN  /opt/phabricator/bin/config set --stdin cluster.mailers < /opt/phabricator/conf/local/mailer.json
 
-RUN  sed 's/post_max_size =.*/post_max_size = 32M/' \
+RUN  sed -e 's/post_max_size =.*/post_max_size = 32M/' \
          -e 's/upload_max_filesize =.*/upload_max_filesize = 32M/' \
          -e 's/;opcache.validate_timestamps=.*/opcache.validate_timestamps=0/' \
          -i /etc/php/7.3/apache2/php.ini
