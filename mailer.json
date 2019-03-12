@@ -3,9 +3,9 @@
     "key": "ses-mails",
     "type": "ses",
     "options": {
-      "access-key": "$AWS_SES_ACCESS_KEY",
-      "secret-key": "$AWS_SES_SECRET_KEY",
-      "endpoint": "email.$AWS_SES_REGION.amazonaws.com"
+      "access-key": "AWS_SES_ACCESS_KEY",
+      "secret-key": "AWS_SES_SECRET_KEY",
+      "endpoint": "email.AWS_SES_REGION.amazonaws.com"
     }
   }
 ]
