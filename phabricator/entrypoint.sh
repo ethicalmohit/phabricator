@@ -5,7 +5,6 @@
 #   [ -z "${MYSQL_USER}" ] && export MYSQL_USER=""
 #   [ -z "${MYSQL_PASS}" ] && export MYSQL_PASS=""
   
-
 #   # Patching the settings file.
 #   sed -e "s/{{MYSQL_HOST}}/${MYSQL_HOST}/g" \
 #     -e "s/{{MYSQL_USER}}/${MYSQL_USER}/g" \
