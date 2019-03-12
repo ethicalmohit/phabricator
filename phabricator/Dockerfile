@@ -20,6 +20,7 @@ RUN apt-get update && apt-get install -y \
         libmysqlclient18 \
         mercurial \
         mysql-client \
+        php7.3-xml \
         php7.3-mbstring \
         php7.3-opcache \
         php7.3 \
@@ -36,13 +37,14 @@ RUN apt-get update && apt-get install -y \
 # For some reason phabricator doesn't have tagged releases. To support
 # repeatable builds use the latest SHA
 
-ADD     download.sh /opt/download.sh
+ADD  download.sh /opt/download.sh
 
-ARG PHABRICATOR_COMMIT=40af472ff5
-ARG ARCANIST_COMMIT=9830c9316d
-ARG LIBPHUTIL_COMMIT=6c64dce5f7
+ARG  PHABRICATOR_COMMIT=40af472ff5
+ARG  ARCANIST_COMMIT=9830c9316d
+ARG  LIBPHUTIL_COMMIT=6c64dce5f7
 
-WORKDIR /opt
+WORKDIR  /opt
+
 RUN  bash download.sh phabricator $PHABRICATOR_COMMIT
 RUN  bash download.sh arcanist    $ARCANIST_COMMIT
 RUN  bash download.sh libphutil   $LIBPHUTIL_COMMIT
@@ -59,7 +61,13 @@ RUN  ln -s /etc/apache2/sites-available/phabricator.conf \
 
 # Setup phabricator
 RUN  mkdir -p /opt/phabricator/conf/local /var/repo
+
 ADD  local.json /opt/phabricator/conf/local/local.json
+
+# Setup mailer
+ADD  mailer.json /opt/phabricator/conf/local/mailer.json
+
+RUN  /opt/phabricator/bin/config set --stdin cluster.mailers < /opt/phabricator/conf/local/mailer.json
 
 RUN  sed 's/post_max_size =.*/post_max_size = 32M/' \
          -e 's/upload_max_filesize =.*/upload_max_filesize = 32M/' \
