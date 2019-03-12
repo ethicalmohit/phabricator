@@ -1,9 +1,19 @@
 {
-	  "phabricator.base-uri": "https://PHABRICATOR_HOST",
-      "storage.default-namespace": "phabricator",
-      "mysql.host": "MYSQL_HOST",
-      "mysql.user": "MYSQL_USER",
-      "mysql.pass": "MYSQL_PASS",
-      "pygments.enabled": true
+  "cluster.mailers": [
+    {
+      "key": "ses-mails",
+      "type": "ses",
+      "options": {
+        "access-key": "AWS_SES_ACCESS_KEY",
+        "secret-key": "AWS_SES_SECRET_KEY",
+        "endpoint": "email.AWS_SES_REGION.amazonaws.com"
+      }
+    }
+  ],
+  "phabricator.base-uri": "https://PHABRICATOR_HOST",
+  "storage.default-namespace": "phabricator",
+  "mysql.host": "MYSQL_HOST",
+  "mysql.user": "MYSQL_USER",
+  "mysql.pass": "MYSQL_PASS",
+  "pygments.enabled": true
 }
-
