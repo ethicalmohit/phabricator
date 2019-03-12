@@ -64,11 +64,6 @@ RUN  mkdir -p /opt/phabricator/conf/local /var/repo
 
 ADD  local.json /opt/phabricator/conf/local/local.json
 
-# Setup mailer
-ADD  mailer.json /opt/phabricator/conf/local/mailer.json
-
-#RUN  /opt/phabricator/bin/config set --stdin cluster.mailers < /opt/phabricator/conf/local/mailer.json
-
 RUN  sed -e 's/post_max_size =.*/post_max_size = 32M/' \
         -e 's/upload_max_filesize =.*/upload_max_filesize = 32M/' \
         -e 's/;opcache.validate_timestamps=.*/opcache.validate_timestamps=0/' \
