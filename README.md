@@ -18,5 +18,5 @@ Docker version 18.09.2, build 6247962
 ## Image Building Steps
 
 `docker build -t phabricator .`
-`docker tag phabricator ethicalmohit/phabricator:latest`
+`docker tag phabricator:latest ethicalmohit/phabricator:latest`
 `docker push ethicalmohit/phabricator:latest`
