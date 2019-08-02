@@ -14,9 +14,3 @@ Docker version 18.09.2, build 6247962
 * Uses Latest PHP version.
 * Support to change PHP.ini configuration from Dockerfile.
 * Fetch current packages from phacility using commit ID.
-
-## Image Building Steps
-
-`docker build -t phabricator .`
-`docker tag phabricator:latest ethicalmohit/phabricator:latest`
-`docker push ethicalmohit/phabricator:latest`
